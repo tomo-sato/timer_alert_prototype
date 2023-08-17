@@ -41,6 +41,7 @@ dependencies:
   # バックグランドアプリ関連ライブラリ
   device_info_plus: ^3.2.4
   flutter_local_notifications: ^12.0.4
+  fluttertoast: ^8.2.2
   shared_preferences: ^2.0.15
 
 dev_dependencies:

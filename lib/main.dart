@@ -8,6 +8,8 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -116,7 +118,14 @@ void onStart(ServiceInstance service) async {
   });
 
   // bring to foreground
-  Timer.periodic(const Duration(seconds: 1), (timer) async {
+  Timer.periodic(const Duration(seconds: 7), (timer) async {
+
+    Fluttertoast.showToast(
+      msg: 'トースト１',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+    );
+
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         /// OPTIONAL for use custom notification
@@ -246,12 +255,22 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text("Foreground Mode"),
               onPressed: () {
+                Fluttertoast.showToast(
+                  msg: 'トースト2',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                );
                 FlutterBackgroundService().invoke("setAsForeground");
               },
             ),
             ElevatedButton(
               child: const Text("Background Mode"),
               onPressed: () {
+                Fluttertoast.showToast(
+                  msg: 'トースト3',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                );
                 FlutterBackgroundService().invoke("setAsBackground");
               },
             ),
@@ -302,7 +321,13 @@ class _LogViewState extends State<LogView> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+    timer = Timer.periodic(const Duration(seconds: 15), (timer) async {
+      Fluttertoast.showToast(
+        msg: 'トースト4',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+
       final SharedPreferences sp = await SharedPreferences.getInstance();
       await sp.reload();
       logs = sp.getStringList('log') ?? [];
